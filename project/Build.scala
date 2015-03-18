@@ -250,9 +250,10 @@ object Scrooge extends Build {
     id = "scrooge-sbt-plugin",
     base = file("scrooge-sbt-plugin"),
     settings = Project.defaultSettings ++
-      sharedSettings ++
-      bintrayPublishSettings
+      sharedSettings
   ).settings(
+    version := libVersion + "-" + Process("git rev-parse HEAD").lines.head.substring(0, 10),
+    organization := "co.actioniq.thirdparty.com.twitter",
     sbtPlugin := true,
     publishMavenStyle := false,
     repository in bintray := "sbt-plugins",
