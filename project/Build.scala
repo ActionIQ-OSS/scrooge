@@ -11,9 +11,11 @@ import sbtbuildinfo.Plugin._
 
 object Scrooge extends Build {
   val branch = Process("git" :: "rev-parse" :: "--abbrev-ref" :: "HEAD" :: Nil).!!.trim
-  val suffix = if (branch == "master") "" else "-SNAPSHOT"
+  //  val suffix = if (branch == "master") "" else "-SNAPSHOT"
+  val suffix = ""
+  val sha = Process("git rev-parse HEAD").lines.head.substring(0, 10)
 
-  val libVersion = "3.17.0" + suffix
+  val libVersion = "3.17.0" + suffix + s"-$sha"
   val utilVersion = "6.23.0" + suffix
   val finagleVersion = "6.24.0" + suffix
 
@@ -57,7 +59,8 @@ object Scrooge extends Build {
 
   val sharedSettings = Seq(
     version := libVersion,
-    organization := "com.twitter",
+//    organization := "com.twitter",
+    organization := "co.actioniq.thirdparty.com.twitter",
     crossScalaVersions := Seq("2.10.5"),
     scalaVersion := "2.10.5",
 
@@ -238,7 +241,7 @@ object Scrooge extends Build {
     base = file("scrooge-sbt-plugin"),
     settings = Project.defaultSettings ++
       sharedSettings ++
-      bintrayPublishSettings ++
+//      bintrayPublishSettings ++
       buildInfoSettings
   ).settings(
       sourceGenerators in Compile <+= buildInfo,
@@ -248,8 +251,7 @@ object Scrooge extends Build {
       publishMavenStyle := false,
       repository in bintray := "sbt-plugins",
       licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html")),
-      bintrayOrganization in bintray := Some("twittercsl"),
-        organization := "co.actioniq.thirdparty.com.twitter",
+      bintrayOrganization in bintray := Some("twittercsl")
   ).dependsOn(scroogeGenerator)
 
   lazy val scroogeLinter = Project(
