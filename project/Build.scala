@@ -13,7 +13,7 @@ object Scrooge extends Build {
   val branch = Process("git" :: "rev-parse" :: "--abbrev-ref" :: "HEAD" :: Nil).!!.trim
   //  val suffix = if (branch == "master") "" else "-SNAPSHOT"
   val suffix = ""
-  val sha = Process("git rev-parse HEAD").lines.head.substring(0, 10)
+  val sha = Process("git rev-parse HEAD").lines.head
 
   val libVersion = "3.17.0" + suffix + s"-$sha"
   val utilVersion = "6.23.0" + suffix
