@@ -239,16 +239,16 @@ object Scrooge extends Build {
     base = file("scrooge-sbt-plugin"),
     settings = Project.defaultSettings ++
       sharedSettings ++
-      bintrayPublishSettings ++
+//      bintrayPublishSettings ++
       buildInfoSettings
   ).settings(
       sourceGenerators in Compile <+= buildInfo,
       buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
       buildInfoPackage := "com.twitter",
       sbtPlugin := true,
-      publishMavenStyle := false,
+//      publishMavenStyle := false,
       repository in bintray := "sbt-plugins",
-      licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html")),
+//      licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html")),
       bintrayOrganization in bintray := Some("actioniq")
   ).dependsOn(scroogeGenerator)
 
